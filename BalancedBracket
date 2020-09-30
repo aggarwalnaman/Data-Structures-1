@@ -1,0 +1,50 @@
+import java.util.*;
+public class BalancedBracket{
+    static boolean isPaired(char a,char b){
+        char[][] brackets={
+            {'[',']'},
+            {'(',')'},
+            {'{','}'},
+            {'<','>'}
+        };
+        for(char[] bracket :brackets){
+            if(bracket[0]==a && bracket[1]==b)
+                return true;
+        }
+        return false;
+    }
+    static boolean isBalanced(String s){
+        if(s==null){
+            System.out.println("Empty String");
+            return false;
+        }
+        Stack<Character> bracket=new Stack<>();
+        for(char c: s.toCharArray()){
+            switch(c){
+                case '(':
+                case '{':
+                case '[':
+                    bracket.push(c);
+                    break;
+                case ')':
+                case '}':
+                case ']':
+                    if(bracket.isEmpty() || !isPaired(bracket.pop(), c))
+                        return false;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        return bracket.isEmpty();
+    }
+    public static void main(String args[]){
+        Scanner in = new Scanner(System.in);
+        String s=in.next();
+        if(isBalanced(s))
+            System.out.println("Brackets are balanced");
+        else
+            System.out.println("Brackets are not balanced");
+        in.close();
+    }
+}
